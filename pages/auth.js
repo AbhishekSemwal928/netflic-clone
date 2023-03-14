@@ -1,8 +1,11 @@
 import Input from '@/components/input'
+import axios from 'axios'
 import React, { useCallback, useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 function Auth() {
-
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -11,6 +14,35 @@ function Auth() {
     const toggleVariant = useCallback(() => {
         setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login')
     }, [])
+
+    const login = useCallback(async () => {
+        try {
+            await signIn('credentials', {
+                email,
+                password,
+                redirect: false,
+                callbackUrl: '/'
+            })
+            router.push('/')
+        } catch (error) {
+            console.log('err', error);
+        }
+    }, [email, password, router])
+
+
+    const register = useCallback(async () => {
+        try {
+            await axios.post('/api/register', {
+                email,
+                name,
+                password
+            })
+            login()
+        } catch (error) {
+            console.log('err', error);
+        }
+    }, [email, name, password, login])
+
 
     return (
         <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -52,16 +84,17 @@ function Auth() {
 
                         <button
                             className='bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition'
+                            onClick={variant === 'login' ? login : register}
 
                         >
-                            {variant === 'login'? 'Login' :'Sign up'}
+                            {variant === 'login' ? 'Login' : 'Sign up'}
                         </button>
 
                         <p className='text-neutral-500 mt-12'>
-                            { variant === 'login' ? '  First time using Netfix' :'Already have an account?' }
-                          
-                            <span className='text-white ml-1 hover:underline cursor-pointer' onClick={toggleVariant}> 
-                            {variant ==='login' ?'Create an account':'Register'}</span>
+                            {variant === 'login' ? '  First time using Netfix' : 'Already have an account?'}
+
+                            <span className='text-white ml-1 hover:underline cursor-pointer' onClick={toggleVariant}>
+                                {variant === 'login' ? 'Create an account' : 'Login'}</span>
                         </p>
                     </div>
                 </div>
