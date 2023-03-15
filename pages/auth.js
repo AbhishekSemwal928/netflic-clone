@@ -3,6 +3,9 @@ import axios from 'axios'
 import React, { useCallback, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+
 
 function Auth() {
     const router = useRouter()
@@ -17,15 +20,20 @@ function Auth() {
 
     const login = useCallback(async () => {
         try {
-            await signIn('credentials', {
+            let res = await signIn('credentials', {
                 email,
                 password,
                 redirect: false,
-                callbackUrl: '/'
+                callbackUrl: '/profiles'
             })
-            router.push('/')
+            if (res.status == 200) {
+                router.push('/profiles')
+            }
+            else {
+                console.log('error', res);
+            }
         } catch (error) {
-            console.log('err', error);
+            console.log('err36', error);
         }
     }, [email, password, router])
 
@@ -89,6 +97,22 @@ function Auth() {
                         >
                             {variant === 'login' ? 'Login' : 'Sign up'}
                         </button>
+
+                        <div className="flex flex-grow items-center gap-4 mt-8 justify-center">
+                            <div
+                                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+                                onClick={() => { signIn('google', { callbackUrl: '/profiles' }) }}
+                            >
+                                <FcGoogle size={30} />
+                            </div>
+
+                            <div
+                                className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
+                                onClick={() => { signIn('github', { callbackUrl: '/profiles' }) }}
+                            >
+                                <FaGithub size={30} />
+                            </div>
+                        </div>
 
                         <p className='text-neutral-500 mt-12'>
                             {variant === 'login' ? '  First time using Netfix' : 'Already have an account?'}
