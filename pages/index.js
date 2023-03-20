@@ -2,6 +2,7 @@ import BillBoard from "@/components/BillBoard";
 import MovieList from "@/components/MovieList";
 import Navbar from "@/components/Navbar";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useFavorites from "@/hooks/useFavorites";
 import useMovieList from "@/hooks/useMovieList";
 import { getSession, signOut } from "next-auth/react";
 
@@ -27,6 +28,8 @@ export async function getServerSideProps(context) {
 export default function Home() {
 
   const { data: movies=[]} = useMovieList()
+  const { data: favorites=[], isLoading} = useFavorites()
+  console.log(isLoading);
 
   return (
     <div>
@@ -38,6 +41,7 @@ export default function Home() {
       <BillBoard/>
       <div className="pd-40">
         <MovieList title="Trending now" data={movies}/>
+        <MovieList title="My List" data={favorites}/>
       </div>
     </div>
   )

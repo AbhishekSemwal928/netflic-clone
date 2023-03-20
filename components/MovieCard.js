@@ -1,5 +1,6 @@
 import React from "react"
 import { BsPlayFill } from "react-icons/bs"
+import FavoriteButton from "./FavoriteButton"
 
 function MovieCard({ data }) {
     return (
@@ -22,6 +23,7 @@ function MovieCard({ data }) {
                         <div onClick={() => { }} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
                             <BsPlayFill size={30} className="text-black w-4 lg:w-6" />
                         </div>
+                        <FavoriteButton movieId={data?.id}/>
                     </div>
 
                     <p className="text-green-400 font-semibold mt-4">
