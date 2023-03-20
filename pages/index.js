@@ -1,5 +1,8 @@
+import BillBoard from "@/components/BillBoard";
+import MovieList from "@/components/MovieList";
 import Navbar from "@/components/Navbar";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useMovieList from "@/hooks/useMovieList";
 import { getSession, signOut } from "next-auth/react";
 
 
@@ -23,7 +26,7 @@ export async function getServerSideProps(context) {
 
 export default function Home() {
 
-  const { data: user } = useCurrentUser()
+  const { data: movies=[]} = useMovieList()
 
   return (
     <div>
@@ -32,6 +35,10 @@ export default function Home() {
       <button className="h-10 w-full bg-white" onClick={() => signOut()}>Logout!</button> */}
 
       <Navbar/>
+      <BillBoard/>
+      <div className="pd-40">
+        <MovieList title="Trending now" data={movies}/>
+      </div>
     </div>
   )
 }

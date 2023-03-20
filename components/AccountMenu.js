@@ -1,5 +1,5 @@
 import React from "react"
-import { signOut } from "next-auth"
+import {  signOut } from "next-auth/react";
 
 function AccountMenu({ visible }) {
     return (
@@ -11,7 +11,7 @@ function AccountMenu({ visible }) {
                             <div className="px-3 group/item flex flex-row gap-3 items-center w-full">
 
                                 <img className="w-8 rounded-md" src="/images/default-blue.png" alt="" />
-                                <p className="text-white text-sm group-hover/item:underline">'dsa'</p>
+                                <p className="text-white text-sm group-hover/item:underline">Username</p>
 
                             </div>
 
