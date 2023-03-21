@@ -1,7 +1,10 @@
 import React from "react"
 import {  signOut } from "next-auth/react";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 function AccountMenu({ visible }) {
+
+    const {data} = useCurrentUser()
     return (
         <div>
             {
@@ -11,7 +14,7 @@ function AccountMenu({ visible }) {
                             <div className="px-3 group/item flex flex-row gap-3 items-center w-full">
 
                                 <img className="w-8 rounded-md" src="/images/default-blue.png" alt="" />
-                                <p className="text-white text-sm group-hover/item:underline">Username</p>
+                                <p className="text-white text-sm group-hover/item:underline">{data?.name}</p>
 
                             </div>
 

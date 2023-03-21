@@ -1,8 +1,10 @@
 import BillBoard from "@/components/BillBoard";
+import InfoModal from "@/components/InfoModal";
 import MovieList from "@/components/MovieList";
 import Navbar from "@/components/Navbar";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useFavorites from "@/hooks/useFavorites";
+import useInfoModal from "@/hooks/useInfoModal";
 import useMovieList from "@/hooks/useMovieList";
 import { getSession, signOut } from "next-auth/react";
 
@@ -29,14 +31,11 @@ export default function Home() {
 
   const { data: movies=[]} = useMovieList()
   const { data: favorites=[], isLoading} = useFavorites()
-  console.log(isLoading);
+  const {isOpen, closeModal} = useInfoModal()
 
   return (
     <div>
-      {/* <h1 className="text-4xl text-green-500">Welcome to netflix</h1>
-      <p className="text-white ">Logged in as : {user?.name} and {user?.email}</p>
-      <button className="h-10 w-full bg-white" onClick={() => signOut()}>Logout!</button> */}
-
+      <InfoModal visible={isOpen} onClose={closeModal}/>
       <Navbar/>
       <BillBoard/>
       <div className="pd-40">
