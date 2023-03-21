@@ -4,7 +4,7 @@ import prismadb from "@/lib/prismadb";
 
 export default async function handler(req, res) {
 
-    if(req.method !=='GET'){
+    if (req.method !== 'GET') {
         return res.status(405).end()
     }
 
@@ -14,8 +14,9 @@ export default async function handler(req, res) {
         const movies = await prismadb.movie.findMany()
 
         return res.status(200).json(movies);
-        
+
     } catch (error) {
-        console.log('err',error);
+        console.log('err', error);
+        return res.status(500).end();
     }
 }
