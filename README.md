@@ -25,7 +25,7 @@ Features:
 ### Cloning the repository
 
 ```shell
-git clone https://github.com/AbhishekSemwal928/netflic-clone.git
+git clone https://github.com/AbhishekSemwal928/netflix-clone.git
 
 ```
 
